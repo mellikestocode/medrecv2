@@ -1,1 +1,1 @@
-# medrecv2
+This is a rewrite of medrec https://github.com/mitmedialab/medrec with up to date libraries and modern tooling.
