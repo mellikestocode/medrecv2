@@ -3,26 +3,16 @@ import { render, screen } from '@testing-library/react';
 import App from './App';
 
 describe('App Component', () => {
-  it('renders the main heading', () => {
+  beforeEach(() => {
     render(<App />);
+  })
+  it('renders the main heading', () => {
     expect(screen.getByText('MedRec v2')).not.toBeUndefined();
   });
 
-  it('renders the welcome message', () => {
-    render(<App />);
-    expect(screen.getByText('Welcome to the Medical Records Application')).not.toBeUndefined();
-  });
-
-  it('renders the features heading', () => {
-    render(<App />);
-    expect(screen.getByText('Features:')).not.toBeUndefined();
-  });
-
-  it('renders the feature list', () => {
-    render(<App />);
-    expect(screen.getByText('View Medical Records')).not.toBeUndefined();
-    expect(screen.getByText('Add New Records')).not.toBeUndefined();
-    expect(screen.getByText('Edit Existing Records')).not.toBeUndefined();
-    expect(screen.getByText('Delete Records')).not.toBeUndefined();
+  it('renders the login form', () => {
+    expect(screen.getByPlaceholderText('Username')).not.toBeUndefined();
+    expect(screen.getByPlaceholderText('Password')).not.toBeUndefined();
+    expect(screen.getByRole('button', { name: /login/i })).not.toBeUndefined();
   });
 });
