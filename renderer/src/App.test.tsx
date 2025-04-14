@@ -5,24 +5,24 @@ import App from './App';
 describe('App Component', () => {
   it('renders the main heading', () => {
     render(<App />);
-    expect(screen.getByText('MedRec v2')).toBeInTheDocument();
+    expect(screen.getByText('MedRec v2')).not.toBeUndefined();
   });
 
   it('renders the welcome message', () => {
     render(<App />);
-    expect(screen.getByText('Welcome to the Medical Records Application')).toBeInTheDocument();
+    expect(screen.getByText('Welcome to the Medical Records Application')).not.toBeUndefined();
   });
 
   it('renders the features heading', () => {
     render(<App />);
-    expect(screen.getByText('Features:')).toBeInTheDocument();
+    expect(screen.getByText('Features:')).not.toBeUndefined();
   });
 
   it('renders the feature list', () => {
     render(<App />);
-    expect(screen.getByText('View Medical Records')).toBeInTheDocument();
-    expect(screen.getByText('Add New Records')).toBeInTheDocument();
-    expect(screen.getByText('Edit Existing Records')).toBeInTheDocument();
-    expect(screen.getByText('Delete Records')).toBeInTheDocument();
+    expect(screen.getByText('View Medical Records')).not.toBeUndefined();
+    expect(screen.getByText('Add New Records')).not.toBeUndefined();
+    expect(screen.getByText('Edit Existing Records')).not.toBeUndefined();
+    expect(screen.getByText('Delete Records')).not.toBeUndefined();
   });
 });
