@@ -1,16 +1,20 @@
 import React, { useState } from 'react';
 import { Box, Typography, Container } from '@mui/material';
+import { fetchToken } from '../../src/api';
 
 const App: React.FC = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLogin = () => {
-    // Replace this with your actual login logic
-    if (username === 'admin' && password === 'password') {
-      alert('Login successful!');
+  const handleLogin = async () => {
+    const token = await fetchToken(username, password);
+    if (token !== null) {
+      console.log("Login successful");
+      // set token in local storage or context
+      // navigate to main page
     } else {
-      alert('Invalid username or password.');
+      console.error("Login failed");
+      // display error message
     }
   };
 
@@ -23,11 +27,11 @@ const App: React.FC = () => {
       </Box>
       <Box sx={{ my: 4 }}>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-          <input type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)}/>
-          <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
+          <input type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
+          <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
           <button type="submit" onClick={handleLogin}>Login</button>
         </Box>
-      </Box>     
+      </Box>
     </Container>
   );
 };
