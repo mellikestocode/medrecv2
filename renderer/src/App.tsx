@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Box, Typography, Container } from '@mui/material';
 import { fetchToken } from '../../src/api';
 
@@ -6,7 +6,8 @@ const App: React.FC = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLogin = async () => {
+  
+  const handleLogin = useCallback(async () => {
     const token = await fetchToken(username, password);
     if (token !== null) {
       console.log("Login successful");
@@ -16,7 +17,7 @@ const App: React.FC = () => {
       console.error("Login failed");
       // display error message
     }
-  };
+  }, [username, password]);
 
   return (
     <Container>
