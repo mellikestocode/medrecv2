@@ -6,6 +6,7 @@ import { useNavigate } from "react-router";
 const App: React.FC = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState<string | null>(null);
 
   const navigate = useNavigate();
   const handleLogin = useCallback(async () => {
@@ -13,9 +14,9 @@ const App: React.FC = () => {
       const token = await fetchToken(username, password);
       // set token in local storage or context
       navigate("/dashboard");
-    } catch (error) { 
-      console.error("Login failed, fetch no bueno", error);
-      // display error message
+    } catch (error: any) {
+      const { message } = error;
+      setError(`fetch token no bueno: ${message}`);
     }
   }, [username, password]);
 
@@ -28,8 +29,8 @@ const App: React.FC = () => {
       </Box>
       <Box sx={{ my: 4 }}>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-          <TextField type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
-          <TextField type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
+          <TextField type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} error={error !== null} helperText={error}/>
+          <TextField type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} error={error !== null}/>
           <Button type="submit" onClick={handleLogin}>Login</Button>
         </Box>
       </Box>
