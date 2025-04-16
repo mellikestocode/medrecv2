@@ -6,7 +6,7 @@ const Dashboard = () => {
         <div>
             <h1>Dashboard</h1>
             <p>An empty dashboard page</p>
-            <NavLink to="/">Take my ass back home</NavLink>
+            <NavLink to="/">Back to Login</NavLink>
         </div>
     );
 }

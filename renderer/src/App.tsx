@@ -16,7 +16,7 @@ const App: React.FC = () => {
       navigate("/dashboard");
     } catch (error: any) {
       const { message } = error;
-      setError(`fetch token no bueno: ${message}`);
+      setError(message); 
     }
   }, [username, password]);
 
