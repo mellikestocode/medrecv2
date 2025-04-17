@@ -20,5 +20,9 @@ module.exports = {
     'src/**/*.{ts,tsx}',
     '!src/**/*.d.ts',
   ],
+  globals: {
+    TextEncoder: require('util').TextEncoder,
+    TextDecoder: require('util').TextDecoder,
+  },
 };
 

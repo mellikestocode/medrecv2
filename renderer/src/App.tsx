@@ -3,7 +3,7 @@ import { Box, Typography, Container, TextField, Button } from '@mui/material';
 import { fetchToken } from '../../lib/api';
 import { useNavigate } from "react-router";
 
-const App: React.FC = () => {
+const App = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
@@ -12,7 +12,7 @@ const App: React.FC = () => {
   const handleLogin = useCallback(async () => {
     try {
       const token = await fetchToken(username, password);
-      // set token in local storage or context
+      // TODO: set token in local storage or context
       navigate("/dashboard");
     } catch (error: any) {
       const { message } = error;
