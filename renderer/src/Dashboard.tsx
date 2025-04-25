@@ -1,11 +1,12 @@
-import react, { use, useEffect, useState } from 'react';
+import react, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router';
 import { Box, Container, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 import { fetchPatient } from '../../lib/api';
-import { Patient } from './types';
+import { MedicalHistory, Patient } from './types';
 
 const Dashboard = () => {
     const [patient, setPatient] = useState<Patient | null>(null);
+
     useEffect(() => {
         fetchPatient().then((data) => {
             setPatient(data);
@@ -31,23 +32,23 @@ const Dashboard = () => {
                         <TableBody>
                             <TableRow>
                                 <TableCell>Name</TableCell>
-                                <TableCell>John Doe</TableCell>
+                                <TableCell>{patient?.name || 'Loading...'}</TableCell>
                             </TableRow>
                             <TableRow>
                                 <TableCell>Date of Birth</TableCell>
-                                <TableCell>01/01/1990</TableCell>
+                                <TableCell>{patient?.dob || 'Loading...'}</TableCell>
                             </TableRow>
                             <TableRow>
                                 <TableCell>Gender</TableCell>
-                                <TableCell>Male</TableCell>
+                                <TableCell>{patient?.gender || 'Loading...'}</TableCell>
                             </TableRow>
                             <TableRow>
                                 <TableCell>Height</TableCell>
-                                <TableCell>180 cm</TableCell>
+                                <TableCell>{patient?.height || 'Loading...'}</TableCell>
                             </TableRow>
                             <TableRow>
                                 <TableCell>Weight</TableCell>
-                                <TableCell>75 kg</TableCell>
+                                <TableCell>{patient?.weight || 'Loading...'}</TableCell>
                             </TableRow>
                         </TableBody>
                     </Table>
@@ -55,40 +56,38 @@ const Dashboard = () => {
             </Box>
             <Box>
                 <Typography variant="h1" component="h2">Medical History</Typography>
-                <TableContainer component={Paper}>
-                    <Table>
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>Field</TableCell>
-                                <TableCell>Value</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            <TableRow>
-                                <TableCell>Date of Service</TableCell>
-                                <TableCell>01/01/2023</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell>Created At</TableCell>
-                                <TableCell>01/02/2023</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell>Provider</TableCell>
-                                <TableCell>Dr. Smith</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell>Notes</TableCell>
-                                <TableCell>Routine check-up</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell>Medications</TableCell>
-                                <TableCell>None</TableCell>
-                            </TableRow>
-                        </TableBody>
-                    </Table>
-                </TableContainer>
+                <MedicalHistoryTable medicalHistory={patient?.medicalHistory || []} />
             </Box>
         </Container>
+    );
+}
+
+const MedicalHistoryTable = ({ medicalHistory }: { medicalHistory: MedicalHistory[] }) => {
+    return (
+        <TableContainer component={Paper}>
+            <Table>
+                <TableHead>
+                    <TableRow>
+                        <TableCell>Date of Service</TableCell>
+                        <TableCell>Created At</TableCell>
+                        <TableCell>Provider</TableCell>
+                        <TableCell>Notes</TableCell>
+                        <TableCell>Medications</TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {medicalHistory.map((history, index) => (
+                        <TableRow key={index}>
+                            <TableCell>{history.dateOfService}</TableCell>
+                            <TableCell>{history.createdAt}</TableCell>
+                            <TableCell>{history.provider}</TableCell>
+                            <TableCell>{history.notes}</TableCell>
+                            <TableCell>{history.medications.join(', ')}</TableCell>
+                        </TableRow>
+                    ))}
+                </TableBody>
+            </Table>
+        </TableContainer>
     );
 }
 
