@@ -12,7 +12,7 @@ const App = () => {
   const handleLogin = useCallback(async () => {
     try {
       const token = await fetchToken(username, password);
-      // TODO: set token in local storage or context
+      localStorage.setItem('token', token);
       navigate("/dashboard");
     } catch (error: any) {
       const { message } = error;
